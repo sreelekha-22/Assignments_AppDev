@@ -1,5 +1,4 @@
-let editMode=false;
-
+let previewBtn = document.querySelector(".btn-preview");
 let selectQuestionType = document.querySelector("#question-type");
 
 let reqInput = document.querySelector("#req"); 
@@ -27,6 +26,11 @@ createNewQn.addEventListener("click",function(event){
 })
 
 function showRelValidations(event){
+    // let curOperation = event && event.detail && event.detail.operation ? event.detail.operation : "add";
+
+    let curOperation = event?.detail?.operation ? "update" : "add";
+    console.log(curOperation);
+
     rangeValdns.querySelectorAll(".valdn").forEach((valdn) => {
         valdn.style.display = "none";
         valdn.querySelectorAll("input").forEach(input => {
@@ -46,7 +50,7 @@ function showRelValidations(event){
     switch(questionType){
         case "text":
             lengthValdn.style.display="block";
-            if(!editMode){
+            if(curOperation !== "update"){
                 lengthValdn.querySelectorAll("input").forEach(input => {
                     input.value="";
                     input.setAttribute("required", "required");
@@ -56,7 +60,7 @@ function showRelValidations(event){
             break;
         case "number":
             numValdn.style.display="block";
-            if(!editMode){
+            if(curOperation !== "update"){
                 numValdn.querySelectorAll("input").forEach(input => {
                     input.value="";
                     input.setAttribute("required", "required");
@@ -65,7 +69,7 @@ function showRelValidations(event){
             break;
         case "date":
             dateValdn.style.display="block";
-            if(!editMode){
+            if(curOperation !== "update"){
                 dateValdn.querySelectorAll("input").forEach(input => {
                     input.value="";
                     input.setAttribute("required", "required");
@@ -77,14 +81,14 @@ function showRelValidations(event){
             break;
         case "dropdown-single":
             optionsContainer.style.display="block";
-            if(!editMode){
-            optionsContainer.querySelector(".options").innerHTML="";
+            if(curOperation !== "update"){
+                optionsContainer.querySelector(".options").innerHTML="";
             }
             break;
         case "dropdown-multi":
             optionsContainer.style.display="block";
-            if(!editMode){
-            optionsContainer.querySelector(".options").innerHTML="";
+            if(curOperation !== "update"){
+                optionsContainer.querySelector(".options").innerHTML="";
             }
             break;
 }
@@ -95,12 +99,22 @@ selectQuestionType.addEventListener('change',function(event){
     }
 );
 
-
+addQsnBtn.addEventListener("click",function(event){
+    if(addQsnBtn.textContent === "Update Question"){
+        addOrUpdateQuestion(event,"update",addQsnBtn.getAttribute("qn-id"));
+        addQsnBtn.textContent = "Add Question";
+        addQsnBtn.removeAttribute("qn-id");
+    }
+    else{
+        addOrUpdateQuestion(event,"add");
+    }
+    
+});
 
 
 function addOrUpdateQuestion(event,operation,currentQuestionId) {
     event.preventDefault(); // Prevent the default form submission
-
+   
     // operation= add or update
 
 
@@ -109,7 +123,8 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         let questionId = currentQuestionId || Date.now();
         // let questionId = Date.now();
 
-        alert("Added question successfully");
+        // console.log("Added question successfully");
+
         let questionType = selectQuestionType.value;
         let isReq = reqInput.checked;
         let inputField;
@@ -118,7 +133,7 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         let questionDiv = document.getElementById(`qn-${questionId}`) || document.createElement("div");
         // let questionDiv = document.createElement("div");
         if(operation === "update"){
-            editMode=false;
+            //update ->operation !== "add"
             document.getElementById(`qn-${questionId}`).innerHTML="";
         }
         else{
@@ -200,7 +215,7 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         editBtn.style.backgroundColor="green";
         editBtn.style.color="white";
         editBtn.setAttribute("type","button");
-        editBtn.text="Edit";
+        editBtn.textContent="Edit";
         btns.appendChild(editBtn);
 
         /*
@@ -214,7 +229,7 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         */
 
         editBtn.addEventListener("click", function (event) {
-            editMode=true;
+            
             // Populate the form with the current question details
             document.querySelector("#question").value = question.innerText;
             selectQuestionType.value = questionType; // Set the question type
@@ -251,13 +266,24 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
             }
         
             // Show the appropriate validation fields based on the question type
-            selectQuestionType.dispatchEvent(new Event('change'));
+            // selectQuestionType.dispatchEvent(new Event('change'));
+
+
+
+            const customParams = { operation: "update" };
+
+            // Create and dispatch the event
+            const changeEvent = new CustomEvent("change", { detail: customParams });
+            selectQuestionType.dispatchEvent(changeEvent);
         
+
+
             // Set the current question ID for editing
             currentQuestionId = questionId;
         
             // Change the button text to "Update Question"
             addQsnBtn.textContent = "Update Question";
+            addQsnBtn.setAttribute("qn-id",currentQuestionId);
         
             // Show the form
             questionForm.style.display = "block";
@@ -269,21 +295,14 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         deleteBtn.style.backgroundColor="red";
         deleteBtn.style.color="white";
         deleteBtn.setAttribute("type","button");
-        deleteBtn.text="Delete";
+        deleteBtn.textContent="Delete";
         btns.appendChild(deleteBtn);
-
-      
-
-
-
-
-
-
 
 
         questionDiv.appendChild(btns);
 
-        if(operation !== "update"){
+        if(operation === "add"){
+            // operation !== "update"
             questionsList.appendChild(questionDiv);
         }
 
@@ -293,18 +312,19 @@ function addOrUpdateQuestion(event,operation,currentQuestionId) {
         questionForm.reset();
 
         
-        
+        if(operation === "update"){
+            selectQuestionType.dispatchEvent(new Event('change')); // reset to text-> bcz doesn't trigger auto...
+           
+        }
         questionForm.style.display="none";
-     
+        enableDragAndDrop();
     } else {
         
         questionForm.reportValidity(); // This will show the validation messages
     }
 }
 
-addQsnBtn.addEventListener("click",function(event){
-    addOrUpdateQuestion(event,"add");
-});
+
 
 addOptionBtn.addEventListener("click" , function(event){
     
@@ -318,3 +338,117 @@ addOptionBtn.addEventListener("click" , function(event){
 
     
 });
+
+
+
+
+
+
+
+
+function enableDragAndDrop() {
+    let questions = document.querySelectorAll(".question-item");
+
+    questions.forEach((question) => {
+        question.setAttribute("draggable", "true");
+
+        question.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text/plain", event.target.id);
+            event.target.classList.add("dragging");
+        });
+
+        question.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            let draggingItem = document.querySelector(".dragging");
+            let currentItem = event.target.closest(".question-item");
+            if (currentItem && draggingItem !== currentItem) {
+                let list = questionsList;
+                let children = [...list.children];
+                let draggingIndex = children.indexOf(draggingItem);
+                let currentIndex = children.indexOf(currentItem);
+
+                if (draggingIndex < currentIndex) {
+                    list.insertBefore(draggingItem, currentItem.nextSibling);
+                } else {
+                    list.insertBefore(draggingItem, currentItem);
+                }
+            }
+        });
+
+        question.addEventListener("dragend", (event) => {
+            event.target.classList.remove("dragging");
+        });
+    });
+}
+
+enableDragAndDrop();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const previewBtn = document.querySelector(".btn-preview");
+    const mgmtTab = document.getElementById("mgmt-tab");
+    const prvTab = document.getElementById("prv-tab");
+    const managementPage = document.getElementById("management");
+    const previewPage = document.getElementById("preview");
+    const previewContainer = previewPage; // Assuming the preview page acts as a container
+
+    // Function to switch tabs
+    function switchTab(activeTab, activePage) {
+        // Remove active class from both tabs
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        // Hide both pages
+        document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+
+        // Set active tab and active page
+        activeTab.classList.add("active");
+        activePage.classList.add("active");
+    }
+
+    // Click event for "Question Management" tab
+    mgmtTab.addEventListener("click", function () {
+        switchTab(mgmtTab, managementPage);
+    });
+
+    // Click event for "Question Preview" tab
+    prvTab.addEventListener("click", function () {
+        switchTab(prvTab, previewPage);
+    });
+
+    // Click event for "Get Preview" button
+    previewBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+    
+        // Clone the questions list (assuming it has a class like "questions-list")
+        let questionsList = document.querySelector(".questions-list");
+        if (!questionsList) return;
+    
+        preview.innerHTML = ""; // Clear previous preview
+    
+        let clonedQuestions = questionsList.cloneNode(true);
+        clonedQuestions.querySelectorAll(".flex-v").forEach(btns => btns.remove()); // Remove edit/delete buttons
+    
+        preview.appendChild(clonedQuestions);
+    
+        // Switch to the preview tab
+        switchTab(prvTab, previewPage);
+    });
+    
+    // Form validation on submit
+    let previewForm = document.querySelector("#previewForm");
+    previewForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (previewForm.checkValidity()) {
+           
+            alert("Preview submitted successfully");
+        }
+        else{
+            previewForm.reportValidity();
+            alert("Please fill in all required fields correctly.");
+        }
+    });
+    
+});
+
+
+
+
