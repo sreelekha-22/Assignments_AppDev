@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" id="mgmt-tab">Question Management</button>
+            <button class="tab" id="prv-tab">Question Preview</button>
+        </div>
+        <div class="page active" id="management">
+            <div class="title">
+                <h3> Question Management Form</h3>
+            </div>
+            <div>
+                <button type="button" class="create-new-qn box-sm">+ New question</button>
+            </div>
+    <form action="" name="questionForm">
+
+            <div class="form-group">
+                <label for="question">Question</label>
+                <input type="text" id="question" class="box-lg" placeholder="Type question" required>
+            </div>
+
+            <div class="form-group">
+                <label for="question-type">Select Question Type</label>
+                <select id="question-type" class="box-lg" >
+                    <option value="text">Text</option>
+                    <option value="number">Number</option>
+                    <option value="date">Date</option>
+                    <option value="document">Document</option>
+                    <option value="dropdown-single">Dropdown - Single Select</option>
+                    <option value="dropdown-multi">Dropdown - Multi Select</option>
+                </select>
+            </div>
+
+            <div class="options-container form-group" >
+               <label for="">Options:</label>
+               <div class="options " style="width: 300px;"></div>
+               <button type="button" class="add-option box-sm">Add Option</button>
+            </div>
+
+            <label >Add Validations</label>
+            <div class="form-group validations" >
+                
+                
+                    <div class="form-group req-valdn">
+                        <label for="req">
+                            <input type="checkbox" name="" id="req">
+                            Required
+                        </label>
+                    </div>
+
+
+                    <div class="range-validn">
+                        <div class="valdn num-valdn">
+                            <div class="form-group">
+                                <label for="">Min Number</label>
+                                 <input type="number" name="min-num" >
+                            </div>
+                            <div class="form-group">
+                                <label for="">Max Number</label>
+                                 <input type="number" name="max-num" >
+                            </div>
+                            
+                        </div>
+
+                        <div class="valdn date-valdn">
+                            <div class="form-group">
+                                <label for="">Min Date</label>
+                                 <input type="date" name="min-date" >
+                            </div>
+                            <div class="form-group">
+                                <label for="">Max Date</label>
+                                 <input type="date" name="max-date" >
+                            </div>
+                            
+                        </div>
+
+                        <div class="valdn length-valdn">
+                            <div class="form-group">
+                                <label for="">Min Length</label>
+                                 <input type="number" name="min-len" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Max Length</label>
+                                 <input type="number"  name="max-len" required>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                
+            </div>
+            
+            <button type="submit" class="box-sm" id="add-qn">Add Question</button>
+
+</form>
+
+            <h3 class="title">Your Questions</h3>
+            <div class="questions-list"> </div>
+        </div>
+        <div class="page" id="preview">
+
+        </div>
+
+    </div>
+
+    <script src="c.js"></script>
+</body>
+</html>
