@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="container">
+        <button type="button" class="box-sm btn-preview">Get Preview</button>
         <div class="tabs">
             <button class="tab active" id="mgmt-tab">Question Management</button>
             <button class="tab" id="prv-tab">Question Preview</button>
@@ -104,9 +105,13 @@
             <h3 class="title">Your Questions</h3>
             <div class="questions-list"> </div>
         </div>
-        <div class="page" id="preview">
+        <!-- <div class="page" id="preview">
+        </div> -->
 
-        </div>
+        <form id="previewForm">
+            <div id="preview"></div>
+            <button type="submit" class="btn-preview-submit">Submit</button>
+        </form>
 
     </div>
 
