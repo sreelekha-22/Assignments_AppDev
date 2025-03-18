@@ -3,10 +3,18 @@
     margin: 0;
 }
 .container{
+    position: relative;
+
     width: 810px;
     border: 1px solid black;
     margin: 5px auto;
 }
+
+.page.active {
+    display: block;
+}
+
+
 .tabs{
     display: flex;
 }
@@ -19,9 +27,11 @@
 .tab.active{
     border-bottom: 2px solid black;
     margin-bottom: -2px;
+    background: darkgray;
 }
 .page{
     padding: 20px;
+    display: none;
 }
 .title{
     margin: 10px auto 30px auto;
@@ -81,4 +91,19 @@ label{
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+.question-item.dragging {
+    opacity: 0.6;
+    background-color: #e0e0e0;
+    border-style: dashed;
+}
+.btn-preview{
+    background-color: rgb(20, 151, 202);
+    color: white;
+
+    position: absolute;
+    top:0px;
+    right:-210px ;
+
 }
