@@ -385,12 +385,14 @@ enableDragAndDrop();
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
     const previewBtn = document.querySelector(".btn-preview");
     const mgmtTab = document.getElementById("mgmt-tab");
     const prvTab = document.getElementById("prv-tab");
     const managementPage = document.getElementById("management");
-    const previewPage = document.getElementById("preview");
-    const previewContainer = previewPage; // Assuming the preview page acts as a container
+    const previewPage = document.getElementById("preview-page");
+    const previewContainer = document.getElementById("preview");
+    // const previewContainer = previewPage; // Assuming the preview page acts as a container
 
     // Function to switch tabs
     function switchTab(activeTab, activePage) {
@@ -422,12 +424,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let questionsList = document.querySelector(".questions-list");
         if (!questionsList) return;
     
-        preview.innerHTML = ""; // Clear previous preview
+        previewContainer.innerHTML = ""; // Clear previous preview
     
         let clonedQuestions = questionsList.cloneNode(true);
         clonedQuestions.querySelectorAll(".flex-v").forEach(btns => btns.remove()); // Remove edit/delete buttons
     
-        preview.appendChild(clonedQuestions);
+        previewContainer.appendChild(clonedQuestions);
     
         // Switch to the preview tab
         switchTab(prvTab, previewPage);
@@ -448,7 +450,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
 });
-
 
 
 
