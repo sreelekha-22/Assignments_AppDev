@@ -1,0 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.container{
+    position: relative;
+
+    width: 810px;
+    border: 1px solid black;
+    margin: 5px auto;
+}
+.page{
+    padding: 20px;
+    display: none;
+}
+.page.active {
+    display: block;
+}
+
+.tabs{
+    display: flex;
+}
+.tab{
+    width: 400px;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+.tab.active{
+    border-bottom: 2px solid black;
+    margin-bottom: -2px;
+    background: darkgray;
+}
+
+.title{
+    margin: 10px auto 30px auto;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    margin-bottom: 20px;
+}
+label{
+    display: block;
+    font-weight: 600;
+}
+.box-lg{
+    width: 700px;
+    height: 30px;
+}
+.box-sm{
+    width: 200px;
+    height: 30px;
+}
+.box-vsm{
+    width: 100px;
+    height: 30px;
+}
+.box-md{
+    width: 300px;
+    height: 30px;
+}
+
+.options-container{
+    display: none;
+}
+
+.validations{
+    background-color: #f9f9f9;
+}
+
+.question-item{
+    padding: 10px;
+    margin-top: 20px;
+    background-color: aliceblue;
+
+    min-height: 110px;
+    position: relative;
+}
+.qn-dropdown{
+    width: 100px;
+}
+.flex-v{
+    width: 250px;
+    display: flex;
+    gap:5px;
+}
+.right-top{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.question-item.dragging {
+    opacity: 0.6;
+    background-color: #e0e0e0;
+    border-style: dashed;
+}
+.btn-preview{
+    background-color: rgb(20, 151, 202);
+    color: white;
+
+    position: absolute;
+    top:0px;
+    right:-210px ;
+
+}
