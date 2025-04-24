@@ -5,11 +5,12 @@ import Question from "../Question/Question";
 
 interface QuestionsProps {
   questions: Question[];
-  onEdit: (question: Question) => void;
+  onUpdateQn: (question: Question) => void;
   onDelete:(question: Question) => void;
+  setCurrentQuestion :  React.Dispatch<React.SetStateAction<Question>>;
 }
 
-const Questions: React.FC<QuestionsProps> = ({ questions, onEdit, onDelete }) => {
+const Questions: React.FC<QuestionsProps> = ({ questions, onUpdateQn, onDelete ,setCurrentQuestion}) => {
   console.log("Questions Rendered");
   console.log(questions);
   return (
@@ -20,7 +21,7 @@ const Questions: React.FC<QuestionsProps> = ({ questions, onEdit, onDelete }) =>
           <QuestionItem
             key={question.id}
             currentQuestion={question}
-            onEdit={onEdit}
+            onUpdateQn={onUpdateQn}
             onDelete={onDelete}
           />
         
