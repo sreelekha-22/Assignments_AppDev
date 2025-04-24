@@ -13,17 +13,19 @@ interface Question {
 interface QuestionItemProps {
   currentQuestion: Question;
   // onAddOrUpdate: (question: Question) => void;
-  onEdit: (question: Question) => void;
+  onUpdateQn: (question: Question) => void;
   onDelete: (question: Question) => void;
 }
 
 const QuestionItem: React.FC<QuestionItemProps> = ({
   currentQuestion,
-  onEdit,
+  onUpdateQn,
   onDelete,
 }) => {
   const handleEdit = () => {
     // onEdit(currentQuestion);
+    // onUpdateQn(currentQuestion);
+    
     
   };
 
