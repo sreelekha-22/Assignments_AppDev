@@ -26,15 +26,41 @@ export default function HomePage(){
         
     }
 
-    function onAddOrUpdate(questionToBeAddOrUpdate : Question ){
+    // function onAddOrUpdate(questionToBeAddOrUpdate : Question ){
+    //     console.log(" Adding func. called for qn" , questionToBeAddOrUpdate);
+    //     if(questionToBeAddOrUpdate.id){
+    //         setQuestions(prevQuestions => ( prevQuestions.map(question => (question.id===questionToBeAddOrUpdate.id ? questionToBeAddOrUpdate : question) ) ));
+    //     }
+    //     else{
+
+    //         setQuestions(prevQuestions => ([...prevQuestions,questionToBeAddOrUpdate]));
+    //     }
+    //     setShowForm(false);
+    //     setCurrentQuestion({ 
+    //         id: "",
+    //         text: "",
+    //         type: "",
+    //         required: false,
+    //        });
+    // }
+    function onAddQn(questionToBeAddOrUpdate : Question ){
         console.log(" Adding func. called for qn" , questionToBeAddOrUpdate);
-        if(questionToBeAddOrUpdate.id){
-            setQuestions(prevQuestions => ( prevQuestions.map(question => (question.id===questionToBeAddOrUpdate.id ? questionToBeAddOrUpdate : question) ) ));
-        }
-        else{
-            
+       
             setQuestions(prevQuestions => ([...prevQuestions,questionToBeAddOrUpdate]));
-        }
+        
+        setShowForm(false);
+        setCurrentQuestion({ 
+            id: "",
+            text: "",
+            type: "",
+            required: false,
+           });
+    }
+    function onUpdateQn(questionToBeAddOrUpdate : Question ){
+        console.log(" Updating func. called for qn" , questionToBeAddOrUpdate);
+       
+            setQuestions(prevQuestions => ( prevQuestions.map(question => (question.id===questionToBeAddOrUpdate.id ? questionToBeAddOrUpdate : question) ) ));
+      
         setShowForm(false);
         setCurrentQuestion({ 
             id: "",
@@ -60,10 +86,10 @@ export default function HomePage(){
             </div> 
             
              {
-                showForm && <QuestionManagement currentQuestion={currentQuestion} setShowForm={setShowForm} onAddOrUpdate={onAddOrUpdate}/>
+                showForm && <QuestionManagement currentQuestion={currentQuestion} setShowForm={setShowForm} onAddQn={onAddQn} onUpdateQn={onUpdateQn} />
              }
 
-             <Questions questions={questions} onEdit={onAddOrUpdate} onDelete={onDelete}/>
+             <Questions questions={questions} onUpdateQn={onUpdateQn} onDelete={onDelete setCurrentQuestion={setCurrentQuestion}}/>
 
         </div>
       
