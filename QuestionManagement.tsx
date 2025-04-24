@@ -6,11 +6,12 @@ import Question from "../Question/Question";
 interface QuestionManagementProps {
     setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
     currentQuestion : Question;
-    onAddOrUpdate: (question: Question) => void; 
+    onAddQn: (question: Question) => void; 
+    onUpdateQn : (question: Question) => void; 
   
 }
 
-const QuestionManagement: React.FC<QuestionManagementProps> = ({ setShowForm ,currentQuestion, onAddOrUpdate}) => {    
+const QuestionManagement: React.FC<QuestionManagementProps> = ({ setShowForm ,currentQuestion, onAddQn, onUpdateQn}) => {    
     const [questionText, setQuestionText] = useState(currentQuestion.text || '');
     const [questionType, setQuestionType] = useState(currentQuestion.type || "text");
     const [isRequired, setIsRequired] = useState(currentQuestion.required || false);
@@ -41,7 +42,7 @@ const QuestionManagement: React.FC<QuestionManagementProps> = ({ setShowForm ,cu
             optionsList: optionsList.filter(option => option) // remove empty options
         };
         console.log("Added New Question" ,newQuestion);
-        onAddOrUpdate(newQuestion); 
+        onAddQn(newQuestion); 
         setShowForm(false); 
     };
 
