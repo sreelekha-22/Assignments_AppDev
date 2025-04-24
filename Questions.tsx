@@ -1,24 +1,17 @@
 import React from "react";
 import QuestionItem from "../QuestionItem/QuestionItem";
+import Question from "../Question/Question";
 
-interface Question {
-  id: string;
-  text: string;
-  type: string;
-  required: boolean;
-  min?: string;
-  max?: string;
-  optionsList?: string[];
-}
 
 interface QuestionsProps {
   questions: Question[];
-  onAddOrUpdate: (question: Question) => void;
   onEdit: (question: Question) => void;
-  onDelete: (id: string) => void;
+  onDelete:(question: Question) => void;
 }
 
-const Questions: React.FC<QuestionsProps> = ({ questions, onAddOrUpdate, onEdit, onDelete }) => {
+const Questions: React.FC<QuestionsProps> = ({ questions, onEdit, onDelete }) => {
+  console.log("Questions Rendered");
+  console.log(questions);
   return (
     <div>
       <h3 className="title">Your Questions</h3>
@@ -27,7 +20,6 @@ const Questions: React.FC<QuestionsProps> = ({ questions, onAddOrUpdate, onEdit,
           <QuestionItem
             key={question.id}
             currentQuestion={question}
-            onAddOrUpdate={onAddOrUpdate}
             onEdit={onEdit}
             onDelete={onDelete}
           />
